@@ -16,21 +16,57 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-/* Auto-create users table */
-(async () => {
-  try {
+/* =========================
+   DB Connection Test
+========================= */
+
+pool.connect()
+.then(()=>console.log("Database connected"))
+.catch(err=>console.error("Database connection failed",err));
+
+/* =========================
+   Auto Table Creation
+========================= */
+
+async function initDB(){
+
+  try{
+
     await pool.query(`
+
       CREATE TABLE IF NOT EXISTS users(
+
         id SERIAL PRIMARY KEY,
-        name VARCHAR(100),
-        email VARCHAR(100) UNIQUE
+
+        name VARCHAR(100) NOT NULL,
+
+        email VARCHAR(150) UNIQUE NOT NULL,
+
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
       );
+
+      CREATE INDEX IF NOT EXISTS idx_users_email
+      ON users(email);
+
     `);
+
     console.log("Users table ready");
-  } catch (err) {
-    console.error("Table creation error:", err);
+
   }
-})();
+  catch(err){
+
+    console.log("Waiting for database... retrying");
+
+    setTimeout(initDB,5000);
+
+  }
+
+}
+
+initDB();
 
 /* Routes */
 app.get("/health", (req, res) => res.status(200).send("OK"));

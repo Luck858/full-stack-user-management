@@ -192,7 +192,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: CI Pipeline Status
-          to: venkeyboda02@gmail.com,prachivpatil96@gmail.com
+          to: venkeyboda02@gmail.com
           from: ${{ secrets.EMAIL_USERNAME }}
           body: |
             Pipeline Status: ${{ job.status }}
