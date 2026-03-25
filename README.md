@@ -160,10 +160,17 @@ npm start
 - Include this snippet in server.js before your routes:
 
 ```bash
-CREATE TABLE IF NOT EXISTS users(
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(100),
-  email VARCHAR(100) UNIQUE
+      CREATE TABLE IF NOT EXISTS users(
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(150) UNIQUE NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_users_email
+      ON users(email);
+
 );
 
 - This ensures the users table is automatically created when the backend starts.
