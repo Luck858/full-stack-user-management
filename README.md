@@ -232,14 +232,18 @@ Then view the GitHub Actions workflow runs to see status.
 ```bash
 az aks get-credentials \
   --resource-group $RG_NAME \
-  --name $AKS_NAME
+  --name $AKS_NAME \
+  --overwrite-existing
+
 
 kubectl get pods -n <namespace>
 kubectl get services -n <namespace>
 kubectl get ingress -n <namespace>
 kubectl logs -f deployment/backend -n <namespace>
 ```
-## check the ingress loadbalncer ip
+## check the all pods and servicess and ingress loadbalncer ip
+
+![cluster](docs/ingress_alb.jpg)
 
 ### backend
 ```bash
