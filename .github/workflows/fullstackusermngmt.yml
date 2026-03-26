@@ -85,7 +85,7 @@ jobs:
 
   aks-infrastructure-provisioning:
       runs-on: ubuntu-latest    
-      needs: [changes, build-push-scan]
+      needs: [changes]
       if: needs.changes.outputs.run_infra == 'true'
       steps:
 
@@ -118,7 +118,6 @@ jobs:
 
   deploy-to-aks:
     runs-on: ubuntu-latest
-    # needs: [changes, aks-infrastructure-provisioning]
     needs: [changes, build-push-scan, aks-infrastructure-provisioning]
 
     if: |
