@@ -1,9 +1,10 @@
-name: Docker Image Build and Push
-
+name: Full Stack User Management CI/CD Pipeline
 on:
-    push:
-      branches:
-        - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
   changes:
 
