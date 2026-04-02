@@ -32,7 +32,6 @@ jobs:
 
   build-push-scan:
     needs: changes
-    if: needs.changes.outputs.run_app == 'true'
     runs-on: ubuntu-latest
 
     env:
@@ -87,7 +86,6 @@ jobs:
   aks-infrastructure-provisioning:
       runs-on: ubuntu-latest    
       needs: [changes]
-      if: needs.changes.outputs.run_infra == 'true'
       steps:
 
         - name: Checkout
@@ -121,9 +119,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [changes, build-push-scan, aks-infrastructure-provisioning]
 
-    if: |
-      always() &&
-      (needs.changes.outputs.run_app == 'true' || needs.changes.outputs.run_infra == 'true')
 
     steps:
       - name: checkout
