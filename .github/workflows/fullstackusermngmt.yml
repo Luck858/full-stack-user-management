@@ -187,17 +187,17 @@ jobs:
 # Email alerts
 # =========================
 
-  send-email-alerts:
-    needs: [build-push-scan, aks-infrastructure-provisioning, deploy-to-aks]
-    if: always()
-    uses: ./.github/workflows/email-alert.yml
+  # send-email-alerts:
+  #   needs: [build-push-scan, aks-infrastructure-provisioning, deploy-to-aks]
+  #   if: always()
+  #   uses: ./.github/workflows/email-alert.yml
 
-    with:
-      ci_status: ${{ needs.build-push-scan.result }}
-      infra_status: ${{ needs.aks-infrastructure-provisioning.result }}
-      deploy_status: ${{ needs.deploy-to-aks.result }}
+  #   with:
+  #     ci_status: ${{ needs.build-push-scan.result }}
+  #     infra_status: ${{ needs.aks-infrastructure-provisioning.result }}
+  #     deploy_status: ${{ needs.deploy-to-aks.result }}
 
-    secrets: inherit
+  #   secrets: inherit
 
 
             
