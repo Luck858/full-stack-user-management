@@ -132,7 +132,7 @@ jobs:
         
       - name: Setup kubectl
         uses: azure/setup-kubectl@v4 
-        
+
       - name: Configure Kubeconfig
         run: |
           mkdir -p ~/.kube
@@ -164,24 +164,45 @@ jobs:
             else
               echo "Ingress controller already exists"
             fi
+
+      - name: Wait for ingress controller
+        shell: bash
+        run: |
+          kubectl rollout status deployment/ingress-nginx-controller \
+          -n ingress-nginx \
+          --timeout=5m
+
+          echo "Checking ingress controller pods..."
+          kubectl get pods -n ingress-nginx
+
+          echo "Checking ingress services..."
+          kubectl get svc -n ingress-nginx
+
+          echo "Checking admission endpoints..."
+          kubectl get endpoints -n ingress-nginx
+
+
       
       - name: Deploy Kubernetes resources
         run: |
-          kubectl apply -f k8s/namespace.yaml
-          
-          sleep 20s
+          kubectl apply -f k8s/namespace.yaml  
 
           kubectl apply -f k8s/postgres-configmap.yaml
 
           kubectl apply -f k8s/database
 
           kubectl apply -f k8s/backend
+
           kubectl apply -f k8s/frontend
 
           kubectl apply -f k8s/Ingress
 
-
           kubectl get ingress -n devops-app
+
+
+
+
+
 
 # =========================
 # Email alerts
