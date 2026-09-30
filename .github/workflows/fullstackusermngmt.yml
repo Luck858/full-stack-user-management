@@ -139,16 +139,17 @@ jobs:
 
       - name: Get AKS credentials
         run: |
-          az aks get-credentials \
-          --resource-group ${{ vars.RG_NAME }} \
-          --name ${{ vars.AKS_NAME }} \
-          --overwrite-existing  
+           mkdir -p ~/.kube
+           az aks get-credentials \
+           --resource-group tf_akscluster \
+           --name AKScluster \
+           --overwrite-existing 
 
       - name: Wait cluster ready
         run: |
             az aks wait \
-            --resource-group ${{ vars.RG_NAME }} \
-            --name ${{ vars.AKS_NAME }} \
+            --resource-group tf_akscluster \
+            --name AKScluster \
             --created
 
       - name: Verify cluster
