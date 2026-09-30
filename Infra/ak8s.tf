@@ -17,9 +17,15 @@ resource "azurerm_kubernetes_cluster" "base" {
     node_count = var.aks_cluster_info.node_count
     vm_size    = var.aks_cluster_info.vm_size
   }
+  
+  node_provisioning_profile {
+  mode = "Manual"
+}
   identity {
     type = "SystemAssigned"
   }
+
+ 
   depends_on = [azurerm_resource_group.base]
 }
 
