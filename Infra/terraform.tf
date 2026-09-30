@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "terraform-state-rg"
+    resource_group_name  = "tf-state-rg"
     storage_account_name = "skillfix150tfstate"
     container_name       = "tfstate"
     key                  = "skillfix.tfstate"
