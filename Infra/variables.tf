@@ -13,7 +13,7 @@ variable "aks_cluster_info" {
     name       = string
     dns_prefix = string
     node_count = optional(number, 1)
-    vm_size    = optional(string, "Standard_B2ms")
+    vm_size    = optional(string, "Standard_D2s_v3")
 
   })
 
