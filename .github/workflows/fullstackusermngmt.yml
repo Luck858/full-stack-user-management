@@ -132,6 +132,7 @@ jobs:
         
       - name: Setup kubectl
         uses: azure/setup-kubectl@v4 
+        
       - name: Configure Kubeconfig
         run: |
           mkdir -p ~/.kube
@@ -139,17 +140,16 @@ jobs:
 
       - name: Get AKS credentials
         run: |
-           mkdir -p ~/.kube
            az aks get-credentials \
-           --resource-group tf_akscluster \
-           --name AKScluster \
+           --resource-group ${{ vars.RG_NAME }} \
+           --name ${{ vars.AKS_NAME }} \
            --overwrite-existing 
 
       - name: Wait cluster ready
         run: |
             az aks wait \
-            --resource-group tf_akscluster \
-            --name AKScluster \
+            --resource-group ${{ vars.RG_NAME }} \
+            --name ${{ vars.AKS_NAME }} \
             --created
 
       - name: Verify cluster
@@ -179,6 +179,9 @@ jobs:
           kubectl apply -f k8s/frontend
 
           kubectl apply -f k8s/Ingress
+
+
+          kubectl get ingress -n devops-app
 
 # =========================
 # Email alerts
