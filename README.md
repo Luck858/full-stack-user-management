@@ -285,14 +285,3 @@ text
 hello hii
 
 
-hello
-
-lucky
-
-
-hello how are you
-
-hlo
-
-hlo
-
